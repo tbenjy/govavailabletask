@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $organizationCmb = $("#organizationCmb"), $placesTbl = $("#placesTbl");
+    $organizationCmb = $("#organizationCmb"), $placesTbl = $("#placesTbl"), $employeePlaceAskBtn = $("#employeePlaceAskBtn");
 
     OrganizationsFilling();
 
@@ -50,5 +50,9 @@ $(document).ready(function() {
 			.fail(function (err) {
 			    alert($(err.responseText).filter("title").text());
 			});
+    });
+
+    $employeePlaceAskBtn.click(function() {
+        alert("כפתור נלחץ");
     });
 });
