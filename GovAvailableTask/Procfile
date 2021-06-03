@@ -1,1 +1,1 @@
-web: gunicorn govavailabletask.wsgi
+"web: gunicorn GovAvailableTask.wsgi"
