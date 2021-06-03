@@ -1,1 +1,1 @@
-web: gunicorn HotChairs.wsgi
+web: gunicorn govavailabletask.wsgi
