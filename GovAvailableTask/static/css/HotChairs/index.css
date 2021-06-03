@@ -1,0 +1,5 @@
+.placesClass {
+	width: 500px;
+	overflow-x: auto;
+	overflow-y: auto;
+}

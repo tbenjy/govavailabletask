@@ -1,0 +1,35 @@
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/HotChairs/index.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/HotChairs/index.css' %}" />
+</head>
+<body dir="rtl">
+    <div>
+        <label id="organizationLbl">בחר ארגון</label>
+        <select id="organizationCmb">
+            <option hidden></option>
+        </select>
+    </div>
+    <div id="placesDiv" class="placesClass">
+        <table id="placesTbl" class="table table-bordered">
+            <thead>
+              <tr>
+                  <th hidden>מס' מקום הישיבה</th>
+                  <th>מקום הישיבה</th>
+                  <th>מיקום</th>
+                  <th>מצב</th>
+                  <th hidden>מספר העובד</th>
+                  <th>בשימוש ע"י</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
