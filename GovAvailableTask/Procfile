@@ -1,1 +1,1 @@
-"web: gunicorn GovAvailableTask.wsgi"
+web: python manage.py runserver
