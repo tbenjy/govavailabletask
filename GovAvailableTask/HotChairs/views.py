@@ -17,10 +17,10 @@ def index(request):
 
 
 def get_organizations_list(request):
-    client = pymongo.MongoClient("mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority")
+    #client = pymongo.MongoClient("mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority")
     #db = client.hotchairs
-    db = client['hotchairs']
-    list_of_db = client.list_database_names()
+    #db = client['hotchairs']
+    #list_of_db = client.list_database_names()
 
     organization_df = pd.DataFrame({"organizationID": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]})
     return JsonResponse(organization_df.to_json(orient='records'), safe=False)
