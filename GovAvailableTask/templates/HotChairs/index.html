@@ -12,26 +12,57 @@
 </head>
 <body dir="rtl">
     <div>
-        <label id="organizationLbl">בחר ארגון</label>
+        <label id="organizationLbl" for="organizationCmb">בחר ארגון</label>
         <select id="organizationCmb">
             <option hidden></option>
         </select>
     </div>
-    <div id="placesDiv" class="placesClass">
-        <table id="placesTbl" class="table table-bordered">
-            <thead>
-              <tr>
-                  <th hidden>מס' מקום הישיבה</th>
-                  <th>מקום הישיבה</th>
-                  <th>מיקום</th>
-                  <th>מצב</th>
-                  <th hidden>מספר העובד</th>
-                  <th>בשימוש ע"י</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="employeesDiv" class="col-3 tableDiv">
+                <label id="employeesLbl" for="employeesTbl" class="label tablesLabel">עובדי הארגון</label>
+                <table id="employeesTbl" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th hidden>מס' העובד</th>
+                            <th>שם משפחה</th>
+                            <th>שם פרטי</th>
+                            <th>מקום נוכחי</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="historyDiv" class="col-3 tableDiv">
+                <label id="historyLbl" for="historyTbl" class="label tablesLabel">הסטוריית הזמנות של העובד</label>
+                <table id="historyTbl" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th hidden>מס' העובד</th>
+                            <th>שם משפחה</th>
+                            <th>שם פרטי</th>
+                            <th hidden>מס' מקום שהוזמן</th>
+                            <th>מקום שהוזמן</th>
+                            <th>תאריך ההזמנה</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="placesDiv" class="col-3 tableDiv">
+                <label id="placesLbl" for="placesTbl" class="label tablesLabel">מצב מקומות הישיבה של הארגון</label>
+                <table id="placesTbl" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th hidden>מס' מקום הישיבה</th>
+                            <th>מקום הישיבה</th>
+                            <th>מצב</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <button id="employeePlaceAskBtn">הזמן מקום לעובד</button>
 </body>

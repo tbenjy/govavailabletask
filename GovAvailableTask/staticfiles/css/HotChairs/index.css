@@ -1,5 +1,8 @@
-.placesClass {
-	width: 500px;
-	overflow-x: auto;
-	overflow-y: auto;
+.tableDiv {
+    text-align: center;
+}
+
+.tablesLabel {
+    font-weight: bold;
+    text-decoration: underline;
 }

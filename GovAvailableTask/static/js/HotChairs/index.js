@@ -40,10 +40,7 @@ $(document).ready(function() {
                     "<tr>" +
                         "<td hidden>" + place.placeID + "</td>" +
                         "<td>" + place.Description + "</td>" +
-                        "<td>" + place.X_Y + "</td>" +
                         "<td>" + (place.catchByID !== -1 ? "תפוס" : "פנוי") + "</td>" +
-                        "<td hidden>" + place.catchByID + "</td>" +
-                        "<td>" + place.catchByName + "</td>" +
                     "</tr>");
 				});
 			})
