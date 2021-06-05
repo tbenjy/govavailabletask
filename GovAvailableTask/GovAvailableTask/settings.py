@@ -79,8 +79,11 @@ WSGI_APPLICATION = 'GovAvailableTask.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'HotChairs',
+        'CLIENT': {
+            'host': 'mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority',
+        },
     }
 }
 

@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
+
+from HotChairs.Classes.Organizations import Organizations
+from HotChairs.Classes.Employees import Employees
 import pandas as pd
-import pymongo
 
 
 # Create your views here.
@@ -17,11 +20,16 @@ def index(request):
 
 
 def get_organizations_list(request):
-    client = pymongo.MongoClient('mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority')
-    db = client.get_default_database()
+    organizations = Organizations()
+    # Returns a list of all organizations
+    return JsonResponse(organizations.get_all_organizations(), safe=False)
 
-    organization_df = pd.DataFrame({"organizationID": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]})
-    return JsonResponse(organization_df.to_json(orient='records'), safe=False)
+
+def get_organization_employees(request):
+    org_id = int(request.GET["orgID"])
+    employees = Employees()
+    # Returns a list of all organization's employees
+    return JsonResponse(employees.get_employees_by_organization(org_id), safe=False)
 
 
 def get_organization_places(request):
