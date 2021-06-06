@@ -4,13 +4,6 @@ from HotChairs.Constant_Words import *
 import pymongo
 
 
-# Constant words of fields' names
-ID_FLD = "id"
-EMPLOYEE_FLD = "employee"
-LEVEL_FLD = "level"
-MESSAGE_FLD = "message"
-
-
 class Log(MongoBase):
 	def __init__(self):
 		super().__init__(db=HOTCHAIRS_DB, collection=LOG_COL)
