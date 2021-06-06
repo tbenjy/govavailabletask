@@ -1,9 +1,9 @@
 import pymongo
-from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
 import logging
 
+from GovAvailableTask import settings
 from HotChairs.Classes.Organizations import Organizations
 from HotChairs.Classes.Employees import Employees
 import pandas as pd
