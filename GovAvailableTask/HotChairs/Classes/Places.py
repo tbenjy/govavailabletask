@@ -101,3 +101,7 @@ class Places(MongoBase):
                 PLACE_NAME_FLD, pymongo.ASCENDING
             )
         )
+
+    def update_employee_of_the_place(self, place_id, employee_id):
+        # Updates the current employee of the place
+        self._collection.update_one({PLACE_ID_FLD: place_id}, {"$set": {CATCH_BY_FLD: employee_id}})

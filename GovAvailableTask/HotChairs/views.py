@@ -1,6 +1,6 @@
 from bson import json_util
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import logging
 
 from HotChairs.Classes.History import History
@@ -72,7 +72,7 @@ def get_employee_ask_history(request):
 
         history_list = history.get_history_by_employee(employee_id)
         for history_row in history_list:
-            history_row.update(history.get_history_place(history_row))
+            history_row.update(history.get_place_name_of_history(history_row))
 
         # Returns a list of all organization's places
         return JsonResponse(json_util.dumps(history_list), safe=False)
@@ -90,6 +90,28 @@ def get_free_places_list(request):
 
         # Returns a list of all organization's places
         return JsonResponse(json_util.dumps(places_list), safe=False)
+    except Exception as ex:
+        log = Log()
+        log.add_message(logging.getLevelName(logging.ERROR), str(ex))
+
+
+def update_employee_place(request):
+    try:
+        employee_id = int(request.GET["employeeID"])
+        old_place_id = int(request.GET["oldPlaceID"])
+        new_place_id = int(request.GET["newPlaceID"])
+
+        places = Places()
+        if new_place_id != -1:
+            # Put the employee in the selected
+            places.update_employee_of_the_place(new_place_id, employee_id)
+            history = History()
+            # Writes the reservation in the history
+            history.insert_new_place_of_employee(employee_id, new_place_id)
+
+        # Removes the employee from his previous place
+        places.update_employee_of_the_place(old_place_id, -1)
+        return HttpResponse()
     except Exception as ex:
         log = Log()
         log.add_message(logging.getLevelName(logging.ERROR), str(ex))

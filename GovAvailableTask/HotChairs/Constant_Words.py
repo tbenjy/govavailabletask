@@ -30,7 +30,7 @@ CATCH_BY_FLD = "catchBy"
 HISTORY_ID_FLD = "id"
 HISTORY_EMPLOYEE_FLD = "employee"
 HISTORY_PLACE_FLD = "place"
-RESERVATION_TIME_FLD = "ReservationTime"
+RESERVATION_TIME_FLD = "reservationTime"
 # More fields of 'History'
 HISTORY_PLACE_NAME_FLD = "placeName"
 

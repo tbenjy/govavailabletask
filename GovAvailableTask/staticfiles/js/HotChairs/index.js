@@ -174,4 +174,37 @@ $(document).ready(function() {
 	$freePlaceCmb.change(function() {
 	    $dialogOkBtn.prop("disabled", false);
 	});
+
+	$dialogOkBtn.click(function() {
+	    let $employee = $("input[name='employees']:checked"),
+	        $oldPlace = $employee.closest("tr").find("td[place_id]"),
+	        $newPlace = $freePlaceCmb.find("option:selected");
+
+	    let employeeID = parseInt($employee.attr("employee")),
+	        oldPlaceID = parseInt($oldPlace.attr("place_id")),
+			newPlaceID = parseInt($newPlace.val())
+
+	    let params = {
+	        employeeID: employeeID,
+	        oldPlaceID: oldPlaceID,
+			newPlaceID: newPlaceID
+		}
+
+		$.ajax({
+		    async: false,
+			url: "update_employee_place",
+			data: params
+		})
+			.done(function (result) {
+			    $oldPlace.text($newPlace.text())
+			    GetOrganizationPlaces();
+			    if (newPlaceID !== -1)
+			        GetEmployeeAsksHistory(employeeID)
+			})
+			.fail(function (err) {
+				alert($(err.responseText).filter("title").text());
+			});
+
+	    $freePlaceDiv.dialog("close");
+	});
 });
