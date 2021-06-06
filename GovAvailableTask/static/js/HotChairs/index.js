@@ -1,8 +1,10 @@
 $(document).ready(function() {
-	$organizationCmb = $("#organizationCmb"),
-	$employeesTbl = $("#employeesTbl"), $placesTbl = $("#placesTbl"), $historyTbl = $("#historyTbl"),
-	$employeePlaceAskBtn = $("#employeePlaceAskBtn"), $freePlaceDiv = $("#freePlaceDiv"), $freePlaceCmb = $("#freePlaceCmb"), $dialogOkBtn = $("#dialogOkBtn"), $dialogCancelBtn = $("#dialogCancelBtn");
+	let $organizationCmb = $("#organizationCmb"),
+		$employeesTbl = $("#employeesTbl"), $placesTbl = $("#placesTbl"), $historyTbl = $("#historyTbl"),
+		$employeePlaceAskBtn = $("#employeePlaceAskBtn"), $freePlaceDiv = $("#freePlaceDiv"),
+		$freePlaceCmb = $("#freePlaceCmb"), $dialogOkBtn = $("#dialogOkBtn"), $dialogCancelBtn = $("#dialogCancelBtn");
 
+	// Fills the list of organizations in the beginning
 	OrganizationsFilling();
 
 	function OrganizationsFilling() {
@@ -23,9 +25,11 @@ $(document).ready(function() {
 	}
 
 	$organizationCmb.change(function () {
-	    $employeePlaceAskBtn.prop("disabled", true);
-	    GetOrganizationPlaces()
-	    GetOrganizationEmployees()
+		$employeePlaceAskBtn.prop("disabled", true);
+
+		// Fills the tables of places and employees that belong to the organization
+		GetOrganizationPlaces()
+		GetOrganizationEmployees()
 	});
 
 	function GetOrganizationPlaces() {
@@ -75,7 +79,7 @@ $(document).ready(function() {
 				$.each($.parseJSON(result), function (index, employee) {
 					$employeesTbl.append(
 					"<tr>" +
-					    "<td><input type='radio' employee='" + employee.id + "' name='employees' /></td>" +
+						"<td><input type='radio' employee='" + employee.id + "' name='employees' /></td>" +
 						"<td hidden organization='" + employee.organization + "'>" + employee.id + "</td>" +
 						"<td>" + employee.familyName + "</td>" +
 						"<td>" + employee.privateName + "</td>" +
@@ -90,9 +94,10 @@ $(document).ready(function() {
 	}
 
 	$employeesTbl.on("change", "input[name='employees']", function() {
-	    GetEmployeeAsksHistory(parseInt($(this).attr("employee")));
+		// Fills the table of the employee's reservations' history
+		GetEmployeeAsksHistory(parseInt($(this).attr("employee")));
 
-	    $employeePlaceAskBtn.prop("disabled", false);
+		$employeePlaceAskBtn.prop("disabled", false);
 	});
 
 	function GetEmployeeAsksHistory(employeeID) {
@@ -128,16 +133,17 @@ $(document).ready(function() {
 		modal: true,
 		autoOpen: false,
 		open: function(event, ui) {
-		    FreePlacesFilling();
+			// Fills the list of the organization's free places
+			FreePlacesFilling();
 		},
 		close: function(event, ui) {
-		    $dialogOkBtn.prop("disabled", true);
+			$dialogOkBtn.prop("disabled", true);
 		}
 	});
 
 	function FreePlacesFilling() {
-	    $freePlaceCmb.empty();
-	    $freePlaceCmb.append($("<option hidden>").text("בחר אחד מהמקומות הבאים"));
+		$freePlaceCmb.empty();
+		$freePlaceCmb.append($("<option hidden>").text("בחר אחד מהמקומות הבאים"));
 
 		let params = {
 			orgID: $organizationCmb.find("option:selected").val()
@@ -153,7 +159,7 @@ $(document).ready(function() {
 				// Fills the select with the free places
 				let currentPlace = parseInt($("input[name='employees']:checked").closest("tr").find("td[place_id]").attr("place_id"))
 				if (currentPlace !== -1)
-				    $freePlaceCmb.append($("<option>").val(-1).text("בית"));
+					$freePlaceCmb.append($("<option>").val(-1).text("בית"));
 				$.each($.parseJSON(result), function (index, place) {
 					$freePlaceCmb.append($("<option>").val(place.id).text(place.name));
 				});
@@ -164,47 +170,52 @@ $(document).ready(function() {
 	}
 
 	$employeePlaceAskBtn.click(function() {
-	    $freePlaceDiv.dialog("open");
+		$freePlaceDiv.dialog("open");
 	});
 
 	$dialogCancelBtn.click(function() {
-	    $freePlaceDiv.dialog("close");
+		$freePlaceDiv.dialog("close");
 	});
 
 	$freePlaceCmb.change(function() {
-	    $dialogOkBtn.prop("disabled", false);
+		$dialogOkBtn.prop("disabled", false);
 	});
 
 	$dialogOkBtn.click(function() {
-	    let $employee = $("input[name='employees']:checked"),
-	        $oldPlace = $employee.closest("tr").find("td[place_id]"),
-	        $newPlace = $freePlaceCmb.find("option:selected");
+		let $employee = $("input[name='employees']:checked"),
+			$oldPlace = $employee.closest("tr").find("td[place_id]"),
+			$newPlace = $freePlaceCmb.find("option:selected");
 
-	    let employeeID = parseInt($employee.attr("employee")),
-	        oldPlaceID = parseInt($oldPlace.attr("place_id")),
+		let employeeID = parseInt($employee.attr("employee")),
+			oldPlaceID = parseInt($oldPlace.attr("place_id")),
 			newPlaceID = parseInt($newPlace.val())
 
-	    let params = {
-	        employeeID: employeeID,
-	        oldPlaceID: oldPlaceID,
+		let params = {
+			employeeID: employeeID,
+			oldPlaceID: oldPlaceID,
 			newPlaceID: newPlaceID
 		}
 
 		$.ajax({
-		    async: false,
+			async: false,
 			url: "update_employee_place",
 			data: params
 		})
 			.done(function (result) {
-			    $oldPlace.text($newPlace.text())
-			    GetOrganizationPlaces();
-			    if (newPlaceID !== -1)
-			        GetEmployeeAsksHistory(employeeID)
+				// Updates the employee with the new place's ID and name
+				$oldPlace.attr("place_id", $newPlace.val())
+				$oldPlace.text($newPlace.text())
+				// Refresh the table of the organization's places
+				GetOrganizationPlaces();
+				// If the new place isn't the home
+				if (newPlaceID !== -1)
+					// Refresh the table of the employee's history
+					GetEmployeeAsksHistory(employeeID)
 			})
 			.fail(function (err) {
 				alert($(err.responseText).filter("title").text());
 			});
 
-	    $freePlaceDiv.dialog("close");
+		$freePlaceDiv.dialog("close");
 	});
 });
