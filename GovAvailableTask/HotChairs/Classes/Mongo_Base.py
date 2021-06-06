@@ -1,12 +1,9 @@
-from django.conf import settings
-from bson import json_util
-from HotChairs.Constant_Words import *
 import pymongo
 
 
 class MongoBase:
     def __init__(self, db, collection):
-        self.__client = pymongo.MongoClient(settings.DATABASES['default']['CLIENT']['host'])
+        self.__client = pymongo.MongoClient('mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority')
         self._db = self.__client[db]
         self._collection = self._db[collection]
 

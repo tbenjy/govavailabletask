@@ -1,11 +1,9 @@
-import pymongo
 from django.shortcuts import render
 from django.http import JsonResponse
-import logging
-
-from GovAvailableTask import settings
 from HotChairs.Classes.Organizations import Organizations
 from HotChairs.Classes.Employees import Employees
+import logging
+
 import pandas as pd
 
 
@@ -25,15 +23,9 @@ def index(request):
 
 def get_organizations_list(request):
     try:
-        #organizations = Organizations()
+        organizations = Organizations()
         # Returns a list of all organizations
-        #return JsonResponse(organizations.get_all_organizations(), safe=False)
-
-        client = pymongo.MongoClient(settings.DATABASES['default']['CLIENT']['host'])
-        db = client["HotChairs"]
-        collection = db["HotChairs_organizations"]
-        return JsonResponse({"id": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]}, safe=False)
-
+        return JsonResponse(organizations.get_all_organizations(), safe=False)
     except Exception as ex:
         logging.error(ex)
 
