@@ -29,3 +29,9 @@ class EmployeePlacesHistory(models.Model):
     employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
     place = models.ForeignKey(Places, on_delete=models.CASCADE)
     ReservationTime = models.DateTimeField()
+
+
+class Log(models.Model):
+    dateTime = models.DateTimeField()
+    level = models.CharField(max_length=10)
+    message = models.TextField()

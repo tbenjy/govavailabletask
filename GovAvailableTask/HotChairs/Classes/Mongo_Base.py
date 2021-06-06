@@ -1,9 +1,13 @@
+from datetime import datetime
 import pymongo
+
+
+HOST = "mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority"
 
 
 class MongoBase:
     def __init__(self, db, collection):
-        self.__client = pymongo.MongoClient('mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority')
+        self.__client = pymongo.MongoClient(HOST)
         self._db = self.__client[db]
         self._collection = self._db[collection]
 
