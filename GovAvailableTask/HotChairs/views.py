@@ -1,4 +1,5 @@
 import pymongo
+from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
 import logging
@@ -28,10 +29,10 @@ def get_organizations_list(request):
         # Returns a list of all organizations
         #return JsonResponse(organizations.get_all_organizations(), safe=False)
 
-        client = pymongo.MongoClient('mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority')
+        client = pymongo.MongoClient(settings.DATABASES['default']['CLIENT']['host'])
         db = client["HotChairs"]
         collection = db["HotChairs_organizations"]
-        return JsonResponse({"organizationID": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]}, safe=False)
+        return JsonResponse({"id": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]}, safe=False)
 
     except Exception as ex:
         logging.error(ex)
