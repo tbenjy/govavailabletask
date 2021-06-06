@@ -1,6 +1,6 @@
-from bson import json_util
-from HotChairs.Classes.Mongo_Base import *
+from HotChairs.Classes.Mongo_Base import MongoBase
 from HotChairs.Constant_Words import *
+import pymongo
 
 
 # Constant words of fields' names
@@ -34,7 +34,7 @@ class Organizations(MongoBase):
 
     def get_all_organizations(self):
         # Selects all the organizations
-        return json_util.dumps(
+        return list(
             self._collection.find().sort(
                 NAME_FLD, pymongo.ASCENDING
             )

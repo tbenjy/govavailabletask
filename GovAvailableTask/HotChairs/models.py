@@ -8,7 +8,7 @@ class Organizations(models.Model):
 
 
 class Employees(models.Model):
-    employeeID = models.CharField(max_length=9, unique=True, validators=[MinLengthValidator(9)])
+    identityCard = models.CharField(max_length=9, unique=True, validators=[MinLengthValidator(9)])
     privateName = models.CharField(max_length=20)
     familyName = models.CharField(max_length=20)
     organization = models.ForeignKey(Organizations, on_delete=models.CASCADE)
@@ -28,7 +28,7 @@ class Places(models.Model):
 class EmployeePlacesHistory(models.Model):
     employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
     place = models.ForeignKey(Places, on_delete=models.CASCADE)
-    ReservationTime = models.DateTimeField()
+    reservationTime = models.DateTimeField()
 
 
 class Log(models.Model):

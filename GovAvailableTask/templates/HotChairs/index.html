@@ -5,7 +5,7 @@
     <title>{{ title }}</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/HotChairs/index.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/HotChairs/index.js' %}"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/HotChairs/index.css' %}" />
     <link rel="shortcut icon" href="{% static 'image/Purpose.png' %}" />
@@ -24,6 +24,7 @@
                 <table id="employeesTbl" class="table table-bordered">
                     <thead>
                         <tr>
+                            <th></th>
                             <th hidden>מס' העובד</th>
                             <th>שם משפחה</th>
                             <th>שם פרטי</th>
@@ -39,12 +40,9 @@
                 <table id="historyTbl" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th hidden>מס' העובד</th>
-                            <th>שם משפחה</th>
-                            <th>שם פרטי</th>
-                            <th hidden>מס' מקום שהוזמן</th>
+                            <th hidden>מס' הזמנה</th>
+                            <th>מועד ביצוע ההזמנה</th>
                             <th>מקום שהוזמן</th>
-                            <th>תאריך ההזמנה</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -65,5 +63,5 @@
             </div>
         </div>
     </div>
-    <button id="employeePlaceAskBtn">הזמן מקום לעובד</button>
+    <button id="employeePlaceAskBtn" disabled>הזמן מקום לעובד</button>
 </body>

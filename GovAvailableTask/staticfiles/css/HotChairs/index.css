@@ -1,3 +1,7 @@
+body {
+     background-color: deepskyblue;
+}
+
 .tableDiv {
     text-align: center;
 }
@@ -5,4 +9,16 @@
 .tablesLabel {
     font-weight: bold;
     text-decoration: underline;
+}
+
+#employeesTbl {
+    background-color: yellow;
+}
+
+#historyTbl {
+    background-color: orange;
+}
+
+#placesTbl {
+    background-color: lime;
 }
