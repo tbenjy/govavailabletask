@@ -26,7 +26,9 @@ $(document).ready(function() {
 
 	$organizationCmb.change(function () {
 		$employeePlaceAskBtn.prop("disabled", true);
+		$("#historyTbl > tbody").empty();
 
+		$organizationCmb.prop("disabled", true);
 		// Fills the tables of places and employees that belong to the organization
 		GetOrganizationPlaces()
 		GetOrganizationEmployees()
@@ -90,17 +92,20 @@ $(document).ready(function() {
 			})
 			.fail(function (err) {
 				alert($(err.responseText).filter("title").text());
+			})
+			.always(function () {
+				$organizationCmb.prop("disabled", false);
 			});
 	}
 
 	$employeesTbl.on("change", "input[name='employees']", function() {
 		// Fills the table of the employee's reservations' history
 		GetEmployeeAsksHistory(parseInt($(this).attr("employee")));
-
-		$employeePlaceAskBtn.prop("disabled", false);
 	});
 
 	function GetEmployeeAsksHistory(employeeID) {
+		$("#employeesTbl *").prop("disabled", true);
+		$employeePlaceAskBtn.prop("disabled", true);
 		$("#historyTbl > tbody").empty();
 
 		let params = {
@@ -126,6 +131,10 @@ $(document).ready(function() {
 			})
 			.fail(function (err) {
 				alert($(err.responseText).filter("title").text());
+			})
+			.always(function () {
+				$("#employeesTbl *").prop("disabled", false);
+				$employeePlaceAskBtn.prop("disabled", false);
 			});
 	}
 
@@ -197,7 +206,6 @@ $(document).ready(function() {
 		}
 
 		$.ajax({
-			async: false,
 			url: "update_employee_place",
 			data: params
 		})
@@ -218,4 +226,10 @@ $(document).ready(function() {
 
 		$freePlaceDiv.dialog("close");
 	});
+});
+
+$(document).ajaxStart(function() {
+	$(document.body).css({"cursor": "wait"});
+}).ajaxStop(function() {
+	$(document.body).css({"cursor": "default"});
 });
