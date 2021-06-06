@@ -206,6 +206,7 @@ $(document).ready(function() {
 		}
 
 		$.ajax({
+		    async: false,
 			url: "update_employee_place",
 			data: params
 		})
