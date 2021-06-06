@@ -91,3 +91,13 @@ class Places(MongoBase):
                 {CATCH_BY_FLD: employee_id}
             )
         )
+
+    def get_free_places_by_organization(self, organization_id):
+        # Selects the free places of the organization and sorts them by names
+        return list(
+            self._collection.find(
+                {PLACE_ORGANIZATION_FLD: organization_id, CATCH_BY_FLD: -1}
+            ).sort(
+                PLACE_NAME_FLD, pymongo.ASCENDING
+            )
+        )

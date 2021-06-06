@@ -79,3 +79,17 @@ def get_employee_ask_history(request):
     except Exception as ex:
         log = Log()
         log.add_message(logging.getLevelName(logging.ERROR), str(ex))
+
+
+def get_free_places_list(request):
+    try:
+        org_id = int(request.GET["orgID"])
+        places = Places()
+
+        places_list = places.get_free_places_by_organization(org_id)
+
+        # Returns a list of all organization's places
+        return JsonResponse(json_util.dumps(places_list), safe=False)
+    except Exception as ex:
+        log = Log()
+        log.add_message(logging.getLevelName(logging.ERROR), str(ex))

@@ -1,5 +1,7 @@
 $(document).ready(function() {
-	$organizationCmb = $("#organizationCmb"), $employeesTbl = $("#employeesTbl"), $placesTbl = $("#placesTbl"), $historyTbl = $("#historyTbl"), $employeePlaceAskBtn = $("#employeePlaceAskBtn");
+	$organizationCmb = $("#organizationCmb"),
+	$employeesTbl = $("#employeesTbl"), $placesTbl = $("#placesTbl"), $historyTbl = $("#historyTbl"),
+	$employeePlaceAskBtn = $("#employeePlaceAskBtn"), $freePlaceDiv = $("#freePlaceDiv"), $freePlaceCmb = $("#freePlaceCmb"), $dialogOkBtn = $("#dialogOkBtn"), $dialogCancelBtn = $("#dialogCancelBtn");
 
 	OrganizationsFilling();
 
@@ -21,8 +23,9 @@ $(document).ready(function() {
 	}
 
 	$organizationCmb.change(function () {
-	    GetOrganizationPlaces($(this).find("option:selected").val())
-	    GetOrganizationEmployees($(this).find("option:selected").val())
+	    $employeePlaceAskBtn.prop("disabled", true);
+	    GetOrganizationPlaces()
+	    GetOrganizationEmployees()
 	});
 
 	function GetOrganizationPlaces() {
@@ -77,7 +80,7 @@ $(document).ready(function() {
 						"<td>" + employee.familyName + "</td>" +
 						"<td>" + employee.privateName + "</td>" +
 						"<td>" + employee.identityCard + "</td>" +
-						"<td placeID='" + employee.placeID + "'>" + employee.placeName + "</td>" +
+						"<td place_id='" + employee.placeID + "'>" + employee.placeName + "</td>" +
 					"</tr>");
 				});
 			})
@@ -112,7 +115,7 @@ $(document).ready(function() {
 					"<tr>" +
 						"<td hidden employee=" + history.employee + ">" + history.id + "</td>" +
 						"<td>" + history.reservationTime + "</td>" +
-						"<td placeID=" + history.place + ">" + history.placeName + "</td>" +
+						"<td place_id=" + history.place + ">" + history.placeName + "</td>" +
 					"</tr>");
 				});
 			})
@@ -121,7 +124,54 @@ $(document).ready(function() {
 			});
 	}
 
+	$freePlaceDiv.dialog({
+		modal: true,
+		autoOpen: false,
+		open: function(event, ui) {
+		    FreePlacesFilling();
+		},
+		close: function(event, ui) {
+		    $dialogOkBtn.prop("disabled", true);
+		}
+	});
+
+	function FreePlacesFilling() {
+	    $freePlaceCmb.empty();
+	    $freePlaceCmb.append($("<option hidden>").text("בחר אחד מהמקומות הבאים"));
+
+		let params = {
+			orgID: $organizationCmb.find("option:selected").val()
+		}
+
+		$request = $.ajax({
+			url: "get_free_places_list",
+			type: "GET",
+			dataType: "json",
+			data: params
+		})
+			.done(function (result) {
+				// Fills the select with the free places
+				let currentPlace = parseInt($("input[name='employees']:checked").closest("tr").find("td[place_id]").attr("place_id"))
+				if (currentPlace !== -1)
+				    $freePlaceCmb.append($("<option>").val(-1).text("בית"));
+				$.each($.parseJSON(result), function (index, place) {
+					$freePlaceCmb.append($("<option>").val(place.id).text(place.name));
+				});
+			})
+			.fail(function (err) {
+				alert($(err.responseText).filter("title").text());
+			});
+	}
+
 	$employeePlaceAskBtn.click(function() {
-		alert("כפתור נלחץ");
+	    $freePlaceDiv.dialog("open");
+	});
+
+	$dialogCancelBtn.click(function() {
+	    $freePlaceDiv.dialog("close");
+	});
+
+	$freePlaceCmb.change(function() {
+	    $dialogOkBtn.prop("disabled", false);
 	});
 });
