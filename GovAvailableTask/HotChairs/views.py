@@ -1,3 +1,4 @@
+import pymongo
 from django.shortcuts import render
 from django.http import JsonResponse
 import logging
@@ -23,9 +24,15 @@ def index(request):
 
 def get_organizations_list(request):
     try:
-        organizations = Organizations()
+        #organizations = Organizations()
         # Returns a list of all organizations
-        return JsonResponse(organizations.get_all_organizations(), safe=False)
+        #return JsonResponse(organizations.get_all_organizations(), safe=False)
+
+        client = pymongo.MongoClient('mongodb+srv://govavailabletask:hotchairs@hotchairs.8vnio.mongodb.net/HotChairs?retryWrites=true&w=majority')
+        db = client["HotChairs"]
+        collection = db["HotChairs_organizations"]
+        return JsonResponse({"organizationID": [1, 2], "Name": ["ארגון ראשון", "ארגון שני"]}, safe=False)
+
     except Exception as ex:
         logging.error(ex)
 
